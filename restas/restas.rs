@@ -10,11 +10,11 @@ fn main() {
     num2=rng.gen_range(100000..999999);
     if num1>num2{
         println!("{}",num1);
-        println!("{}",num2);
+        println!("-{}",num2);
         total=num1-num2;
     }else{
-        println!("{}",num2);
-        println!("{}",num1);
+        println!(". {}",num2);
+        println!(".-{}",num1);
         total=num2-num1;
     }
     stdin().read_line(&mut s);
