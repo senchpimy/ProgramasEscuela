@@ -1,0 +1,9 @@
+[package]
+name = "lineal"
+version = "0.1.0"
+edition = "2021"
+[dependencies]
+rand="0.8.5"
+[[bin]]
+name = "lineal"
+path = "lineal_compleja.rs"
