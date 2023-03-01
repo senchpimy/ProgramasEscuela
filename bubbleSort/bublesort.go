@@ -29,12 +29,17 @@ fmt.Println("Inicio")
 
 func Bublesort(slice []int,comparaciones *int) {
 	for i := 0; i < len(slice); i++ {
+		bandera :=true
 		for j := 0; j < len(slice)-1; j++ {
-		//for j := 0; j < len(slice)-1-i; j++ {
 			if slice[j] > slice[j+1] {
+				bandera = false
 				*comparaciones++
 				slice[j], slice[j+1] = slice[j+1], slice[j]
 			}
+		}
+		if bandera{
+			fmt.Println("La lista termino de acomodarse a el intento", i)
+			break
 		}
 	}
 
@@ -45,8 +50,10 @@ func CreateList()(lista []int){
 	r1 := rand.New(s1)
 
 	slice := make([]int, 10_000)
+	_ =r1.Intn(10_000)
 	for j := range slice{
 		slice[j]=r1.Intn(10_000)
+		//slice[j]=j
 	}
 	return slice
 }
