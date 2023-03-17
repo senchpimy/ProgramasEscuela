@@ -162,9 +162,7 @@ void eliminar(char pila_char){
 int main(int argc, char *argv[])
 {	
 	int c;
-	int try;
 	int valor;
-	char basura[1];
 	char pila_char;
 	printPila(0,pila_char);
 		printf("Escriba A para añadir, E para eliminar o e para estado: ");
