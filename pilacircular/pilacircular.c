@@ -23,7 +23,7 @@ void printPila(int val,int acc){
 	}else if (acc==2){
 		for (int i=0;i<10;i++){
 			if (i==comienzo-1){
-				printf("\033[93m%d:\033[0m",pila[i]);
+				printf("\033[91m%d:\033[0m",pila[i]);
 			}else{
 				printf("%d:",pila[i]);
 			}
