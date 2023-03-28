@@ -12,11 +12,13 @@ void crear_lista(){
 	}
 }
 
-void insercion(){
+void insercion(int &comparaciones,int &cambios){
 	for (int i = 0; i<elementos; i++) {
 		int mayor=0;
 		for (int j = i; j>0; j--) {
+			comparaciones++;
 			if (lista[j]<lista[j-1]){
+				cambios++;
 				int tmp = lista[j];
 				int tmp2=lista[j-1];
 				lista[j]=tmp2;
@@ -38,16 +40,20 @@ int main (int argc, char *argv[])
 	}
 	cout<<"\n";
 	cout << duration.count() << " microsegundos para crear la lista \n";
+	cout<<"||||||||||||||||||||||||||||||||||||||||||||||||\n";
 
 	auto start2 = high_resolution_clock::now();
-	insercion();
-	insercion();
+	int comparaciones=0;
+	int cambios=0;
+	insercion(comparaciones,cambios);
 	auto stop2 = high_resolution_clock::now();
-	auto duration2 = duration_cast<microseconds>(stop - start);
+	auto duration2 = duration_cast<microseconds>(stop2 - start2);
+	cout<<"Se hicieron " << comparaciones <<" comparaciones\n";
+	cout<<"Se hicieron " << cambios <<" cambios\n";
 	for (int i=0; i<100; i++) {
 	cout<<lista[i]<<" ";
 	}
 	cout<<"\n";
-	cout << duration.count() << " microsegundos para ordenar la lista";
+	cout << duration2.count() << " microsegundos para ordenar la lista\n";
 	return 0;
 }
