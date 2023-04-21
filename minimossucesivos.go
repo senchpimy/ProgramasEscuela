@@ -21,11 +21,12 @@ func main() {
 	fmt.Println("Se hicieron comparaciones:", comparaciones)
 	fmt.Println(lista[:100])
 	fmt.Println(lista[5000])
+	fmt.Println(lista[9900:])
 
 }
 
 func MinimoSucesivo(slice []int, comparaciones *int) {
-    for i := 0; i < len(slice)-1; i++ {
+    for i := 0; i < len(slice); i++ {
         menor := i
         for j := i + 1; j < len(slice); j++ {
             if slice[j] < slice[menor] {
@@ -47,7 +48,6 @@ func CreateList()(lista []int){
 	_ =r1.Intn(10_000)
 	for j := range slice{
 		slice[j]=r1.Intn(10_000)
-		//slice[j]=j
 	}
 	return slice
 }
