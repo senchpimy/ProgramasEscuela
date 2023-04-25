@@ -2,10 +2,8 @@ import numpy as np
 from random import *
 VERTICAL = 0
 HORIZONTAL = 1
-h = 10
-w = 40
-H = (2 * h) + 1
-W = (2 * w) + 1
+H = 20 + 1
+W = 20 + 1
 def printMatriz(mat):
     for i in range(len(mat)):
         for j in range(len(mat[i])):
@@ -35,9 +33,12 @@ def generate():
         region_stack = [((1, 1), (H - 2,W - 2))]
 
         while region_stack:
+            print(region_stack)
             printMatriz(grid)
             input()
             current_region = region_stack[-1]
+            print("hola")
+            print(current_region)
             region_stack = region_stack[:-1]
             min_y = current_region[0][0]
             max_y = current_region[1][0]
@@ -61,6 +62,7 @@ def generate():
             # MAKE CUT
             # select cut position (can't be completely on the edge of the region)
             cut_length = (height, width)[(cut_direction + 1) % 2]
+            print(cut_length)
             if cut_length < 3:
                 continue
             cut_posi = randrange(1, cut_length, 2)

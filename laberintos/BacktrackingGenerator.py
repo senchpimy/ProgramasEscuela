@@ -1,51 +1,60 @@
 import numpy as np
-from random import randrange
+from random import randrange,shuffle
 
-# If the code is not Cython-compiled, we need to add some imports.
-from cython import compiled
+def find_neighbors(r, c, grid, is_wall,He,Wi):
+    ns = []
 
-if not compiled:
-    from mazelib.generate.MazeGenAlgo import MazeGenAlgo
+    if r > 1 and grid[r - 2][c] == is_wall:
+        ns.append((r - 2, c))
+    if r < He - 2 and grid[r + 2][c] == is_wall:
+        ns.append((r + 2, c))
+    if c > 1 and grid[r][c - 2] == is_wall:
+        ns.append((r, c - 2))
+    if c < Wi - 2 and grid[r][c + 2] == is_wall:
+        ns.append((r, c + 2))
+    shuffle(ns)
+    return ns 
 
+H=20
+W=20
 
-class BacktrackingGenerator(MazeGenAlgo):
-    """
-    1. Randomly choose a starting cell.
-    2. Randomly choose a wall at the current cell and open a passage through to any random adjacent
-        cell, that has not been visited yet. This is now the current cell.
-    3. If all adjacent cells have been visited, back up to the previous and repeat step 2.
-    4. Stop when the algorithm has backed all the way up to the starting cell.
-    """
+def generate():
+    # create empty grid, with walls
+    grid = np.empty((H, W), dtype=np.int8)
+    grid.fill(1)
 
-    def __init__(self, w, h):
-        super(BacktrackingGenerator, self).__init__(w, h)
+    crow = randrange(1, H, 2)
+    ccol = randrange(1, W, 2)
+    track = [(crow, ccol)]
+    grid[crow][ccol] = 0
 
-    def generate(self):
-        """highest-level method that implements the maze-generating algorithm
+    while track:
+        (crow, ccol) = track[-1]
+        neighbors = find_neighbors(crow, ccol, grid, True,H,W)
 
-        Returns:
-            np.array: returned matrix
-        """
-        # create empty grid, with walls
-        grid = np.empty((self.H, self.W), dtype=np.int8)
-        grid.fill(1)
+        if len(neighbors) == 0:
+            track = track[:-1]
+        else:
+            nrow, ncol = neighbors[0]
+            grid[nrow][ncol] = 0
+            grid[(nrow + crow) // 2][(ncol + ccol) // 2] = 0
 
-        crow = randrange(1, self.H, 2)
-        ccol = randrange(1, self.W, 2)
-        track = [(crow, ccol)]
-        grid[crow][ccol] = 0
+            track += [(nrow, ncol)]
 
-        while track:
-            (crow, ccol) = track[-1]
-            neighbors = self._find_neighbors(crow, ccol, grid, True)
+    return grid
 
-            if len(neighbors) == 0:
-                track = track[:-1]
+def printMatriz(mat):
+    for i in range(len(mat)):
+        for j in range(len(mat[i])):
+            if mat[i][j]==1:
+                print("\033[91m█\033[0m",end="") #pared
+            elif mat[i][j]==0:
+                print("\033[92m█\033[0m",end="") #libre
+            elif mat[i][j]==3:
+                print("\033[94m█\033[0m",end="") #libre
             else:
-                nrow, ncol = neighbors[0]
-                grid[nrow][ncol] = 0
-                grid[(nrow + crow) // 2][(ncol + ccol) // 2] = 0
+                print("█",end="")
 
-                track += [(nrow, ncol)]
+        print()
 
-        return grid
+printMatriz(generate())

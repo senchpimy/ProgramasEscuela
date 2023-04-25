@@ -12,6 +12,7 @@ def nuevaMatriz():
     matriz[entrada_salida][0]=2
     matriz[entrada_salida][columnas-1]=2
     return matriz
+
 def draw_line(matrix, x1, y1, x2, y2):
     dx = abs(x2 - x1)
     dy = abs(y2 - y1)

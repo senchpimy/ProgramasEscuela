@@ -1,32 +1,12 @@
 from random import choice, randrange, shuffle
 import numpy as np
 
-# If the code is not Cython-compiled, we need to add some imports.
-from cython import compiled
-
-if not compiled:
-    from mazelib.generate.MazeGenAlgo import MazeGenAlgo
 
 RANDOM = 1
 SERPENTINE = 2
 
 
-class DungeonRooms(MazeGenAlgo):
-    """
-    This is a variation on Hunt-and-Kill where the initial maze has rooms carved out of
-    it, instead of being completely flat.
-
-    Optional Parameters
-
-    rooms: List(List(tuple, tuple))
-        A list of lists, containing the top-left and bottom-right grid coords of where
-        you want rooms to be created. For best results, the corners of each room should
-        have odd-numbered coordinates.
-    grid: i8[H,W]
-        A pre-built maze array filled with one, or many, rooms.
-    hunt_order: String ['random', 'serpentine']
-        Determines how the next cell to hunt from will be chosen. (default 'random')
-    """
+class Dungeon():
 
     def __init__(self, h0, w0, rooms=None, grid=None, hunt_order="random"):
         # if the user provides a grid, that overrides h & w
@@ -41,7 +21,6 @@ class DungeonRooms(MazeGenAlgo):
             self.backup_grid.fill(1)
         self.grid = grid
         self.rooms = rooms
-        super(DungeonRooms, self).__init__(h, w)
 
         # the user can define what order to hunt for the next cell in
         if hunt_order.lower().strip() == "serpentine":
